@@ -6,7 +6,8 @@ arquivo = "dados.json"
 def main():
     global arquivo
     fatMen = getDados(arquivo)
-    return (menorValor(fatMen), maiorValor(fatMen), acimaDaMedia(fatMen))
+    print(menorValor(fatMen), maiorValor(fatMen), acimaDaMedia(fatMen))
+    return
 
 
 # pega os dados do .json.
@@ -16,6 +17,9 @@ def getDados(arquivo):
 
 
 # retorna o menor valor entre os valores do .json.
+# esse valor é zero porque o programa não especifica que não se
+# deve considerar os zeros ao contrário da instrução dada para
+# o algorítimo de média
 def menorValor(tabela):
     minimo = tabela[0]['valor']
     for k in range(len(tabela) - 1):
@@ -36,14 +40,17 @@ def maiorValor(tabela):
 # retorna  o número de dias em que o rendimento foi acima da média.
 def acimaDaMedia(tabela):
     soma = 0
-    for k in range(len(tabela)):
-        soma += tabela[k]['valor']
-    media = soma / len(tabela)
     n = 0
     for k in range(len(tabela)):
-        if tabela[k]['valor'] > media:
+        soma += tabela[k]['valor']
+        if tabela[k]['valor'] != 0:
             n += 1
-    return n
+    media = soma / n
+    resultado = 0
+    for k in range(len(tabela)):
+        if tabela[k]['valor'] > media:
+            resultado += 1
+    return resultado
 
 
 main()
